@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
 let token = "EAAbEYXYiyTkBALYbip5vIuPOy3y47E47aFEjSpazVcwmZAt4e7MA3qGBXd3gtBP64TIeQwfbOWv68hje7jZC9P5euZAJZAL1ufinZClyjUkoMf4xIKbln8pv1ZAJBQ2rg2qcS1vxSWN4Q7lkrNEMJ5ZAH5HDZCZAnE4fz7YwjvrJirwZDZD"
 
 // Facebook
-app.get('/webhook', function(req, res) {
+app.get('/webhook/', function(req, res) {
 	if (req.query['hub.verify_token'] == 'hello_app') {
 		res.send(req.query['hub.challenge'])
 	}
@@ -49,7 +49,7 @@ function sendText(sender, text) {
 		qs: {access_token: token},
 		method: "POST",
 		json: {
-			receipt: {id: sender},
+			recipient: {id: sender},
 			message: messageData,
 		}
 	}, function(error, response, body) {
