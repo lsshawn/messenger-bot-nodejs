@@ -53,7 +53,7 @@ function decideMessage(sender, text1) {
 		sendImageMessage(sender, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/CathedralofLearningLawinWinter.jpg/260px-CathedralofLearningLawinWinter.jpg")
 	} else if (text.includes("winter")) {
 		sendGenericMessage(sender)
-	} else if {
+	} else {
 		sendText(sender, "I like Fall")
 		sendButtonMessage(sender, "What is your favorite season?")
 	}
