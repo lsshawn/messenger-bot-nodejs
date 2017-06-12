@@ -52,7 +52,7 @@ function decideMessage(sender, text1) {
 	if (text.includes("summer")) {
 		sendImageMessage(sender, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/CathedralofLearningLawinWinter.jpg/260px-CathedralofLearningLawinWinter.jpg")
 	} else if (text.includes("winter")) {
-		sendGenericMessage(sender, "http://az616578.vo.msecnd.net/files/2016/01/30/635897108712065484-1787440828_winter.jpg")
+		sendGenericMessage(sender, "http://rvsrfun.org/wp-content/uploads/2016/11/winter-rving.jpeg")
 	} else {
 		sendText(sender, "I like Fall")
 		sendButtonMessage(sender, "What is your favorite season?")
@@ -109,7 +109,7 @@ function sendGenericMessage(sender, imageURL) {
 	        "template_type":"generic",
 	        "elements":[
 	           {
-	            "title":"Winter",
+	            "title": "Winter",
 	            "image_url": imageURL,
 	            "subtitle": "I love winter.",
 	            "buttons":[
