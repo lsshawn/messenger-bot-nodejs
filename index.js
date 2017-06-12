@@ -69,20 +69,20 @@ function sendButtonMessage(sender, text) {
 		"attachment":{
 			"type":"template",
 			"payload":{
-			"template_type":"button",
-			"text": text,
-			"buttons":[
-			  {
-			    "type": "postback",
-			    "title": "Summer",
-			    "paylod": "summer"
-			  },
-			  {
-			    "type": "postback",
-			    "title": "Winter",
-			    "payload": "winter"
-			  }
-			]
+				"template_type":"button",
+				"text": text,
+				"buttons":[
+				  {
+				    "type": "postback",
+				    "title": "Summer",
+				    "payload": "summer"
+				  },
+				  {
+				    "type": "postback",
+				    "title": "Winter",
+				    "payload": "winter"
+				  }
+				]
 			}
 		}
 	}
