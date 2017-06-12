@@ -86,7 +86,7 @@ function sendButtonMessage(sender, text) {
 			}
 		}
 	}
-	sendRequest(sender, messageDate)
+	sendRequest(sender, messageData)
 }
  
 function sendImageMessage(sender, imageURL) {
