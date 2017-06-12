@@ -35,15 +35,99 @@ app.post('/webhook/', function(req, res) {
 		let sender = event.sender.id
 		if (event.message && event.message.text) {
 			let text = event.message.text
-			sendText(sender, "Text echo: " + text.substring(0, 100))
+			decideMessage(sender, text)
+			//sendText(sender, "Text echo: " + text.substring(0, 100))
+		}
+		if (event.postback) {
+			let text = JSON.stringify(event.postback)
+			decideMessage(sender, text)
+			continue
 		}
 	}
 	res.sendStatus(200)
 })
 
+function decideMessage(sender, text1) {
+	let text = text1.toLowerCase()
+	if (text.includes("summer")) {
+		sendImageMessage(sender, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/CathedralofLearningLawinWinter.jpg/260px-CathedralofLearningLawinWinter.jpg")
+	} else if (text.includes("winter")) {
+		sendGenericMessage(sender)
+	} else if {
+		sendText(sender, "I like Fall")
+		sendButtonMessage(sender, "What is your favorite season?")
+	}
+}
 
 function sendText(sender, text) {
 	let messageData = {text: text}
+	sendRequest(sender, messageData)
+}
+
+function sendButtonMessage(sender, text) {
+	let messageData = {
+		"attachment":{
+			"type":"template",
+			"payload":{
+			"template_type":"button",
+			"text": text,
+			"buttons":[
+			  {
+			    "type": "postback",
+			    "title": "Summer",
+			    "paylod": "summer"
+			  },
+			  {
+			    "type": "postback",
+			    "title": "Winter",
+			    "payload": "winter"
+			  }
+			]
+			}
+		}
+	}
+	sendRequest(sender, messageDate)
+}
+ 
+function sendImageMessage(sender, imageURL) {
+	let messageData = {
+		"attachment": {
+			"type":"image",
+			"payload":{
+				"url": imageURL
+			}	
+		}
+    }
+    sendRequest(sender, messageData)
+}
+
+function sendGenericMessage(sender, text) {
+	let messageData = {
+		"attachment":{
+	      "type":"template",
+	      "payload":{
+	        "template_type":"generic",
+	        "elements":[
+	           {
+	            "title":"I love Winter",
+	            "image_url":"http://az616578.vo.msecnd.net/files/2016/01/30/635897108712065484-1787440828_winter.jpg",
+	            "subtitle":"I love winter.",
+	            "buttons":[
+	              {
+	                "type":"web_url",
+	                "url":"https://en.wikipedia.org/wiki/Winter",
+	                "title":"More about winter!"
+	              }              
+	            ]      
+	          }
+	        ]
+	      }
+	  }
+	}
+	sendRequest(sender, messageData)
+}
+
+function sendRequest(sender, messageData) {
 	request({
 		url: "https://graph.facebook.com/v2.6/me/messages",
 		qs: {access_token: token},
