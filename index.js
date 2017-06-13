@@ -4,6 +4,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 
+var Config = require('./config')
+var FB = requires('./connectors/facebook')
+
 const app = express()
 
 app.set('port', (process.env.PORT || '5000'))
@@ -12,24 +15,24 @@ app.set('port', (process.env.PORT || '5000'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-// ROUTES
+// index page
 app.get('/', function(req, res) {
 	res.send("Hi I'm a chatbot")
 
 })
 
-let token = "EAAbEYXYiyTkBALYbip5vIuPOy3y47E47aFEjSpazVcwmZAt4e7MA3qGBXd3gtBP64TIeQwfbOWv68hje7jZC9P5euZAJZAL1ufinZClyjUkoMf4xIKbln8pv1ZAJBQ2rg2qcS1vxSWN4Q7lkrNEMJ5ZAH5HDZCZAnE4fz7YwjvrJirwZDZD"
-
-// Facebook
+// verify Facebook App Webhook
 app.get('/webhook/', function(req, res) {
-	if (req.query['hub.verify_token'] == 'hello_app') {
+	if (req.query['hub.verify_token'] == Config.FB_VERIFY_TOKEN) {
 		res.send(req.query['hub.challenge'])
 	}
 	res.send('Wrong token')
 })
 
+// to send messages to facebook
 app.post('/webhook/', function(req, res) {
-	let messaging_events = req.body.entry[0].messaging
+	var entry = FB.getMessageEntry(req.body)
+	let messaging_events = entry[0].messaging
 	for (let i=0; i<messaging_events.length; i++) {
 		let event = messaging_events[i]
 		let sender = event.sender.id
@@ -145,6 +148,7 @@ function sendRequest(sender, messageData) {
 	})
 }
 
+// run server
 app.listen(app.get('port'), function() {
-	console.log('running: port')
+	console.log('Running on port', app.get('port'))
 })
